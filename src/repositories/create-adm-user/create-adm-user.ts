@@ -1,12 +1,11 @@
-import { Administrators, PrismaClient } from "@prisma/client";
+import { Administrators } from "@prisma/client";
+import prisma from "../../services/prisma-client/prisma-client";
 import {
   IcreateAdmUserParams,
   IcreateAdmUserRepository,
 } from "../../interfaces/create-adm-user/create-adm-user";
 import { IsearchExistingAdmUser } from "../../interfaces/search-existing-adm-user/search-existing-adm-user";
 import { GeneratePasswordBcrypt } from "../../services/create-password-bycript/generate-password-bcrypt";
-
-const prisma = new PrismaClient();
 
 export class CreateAdmUserRepository implements IcreateAdmUserRepository {
   async searchExistingAmdUser(
