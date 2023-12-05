@@ -5,6 +5,8 @@ import { GetAdmUsersController } from "./controller/get-adm-user/get-adm-user";
 import { GetAdmUsersRepository } from "./repositories/get-adm-user/get-adm-user";
 import { LoginUserRepository } from "./repositories/login/login";
 import { LoginUserController } from "./controller/login/login";
+import { GetProductRepository } from "./repositories/get-products/get-products";
+import { GetProductController } from "./controller/get-products/get-products";
 
 const routes = Router();
 
@@ -39,6 +41,15 @@ routes.post("/administrators", async (req: Request, res: Response) => {
   const { body, statusCode } = await createUserAdmController.handle({
     body: req.body!,
   });
+
+  res.status(statusCode).send(body);
+});
+
+routes.get("/product", async (req: Request, res: Response) => {
+  const getProductRepository = new GetProductRepository();
+  const getProductController = new GetProductController(getProductRepository);
+
+  const { statusCode, body } = await getProductController.handle();
 
   res.status(statusCode).send(body);
 });
