@@ -1,4 +1,7 @@
 export interface IsearchExistingAdmUser {
-  existingUser: boolean;
-  existingEmail: boolean;
+  error: boolean;
+  existingUser?: boolean;
+  existingEmail?: boolean;
+  statusCode?: number;
+  errorMessage?: string;
 }
