@@ -3,10 +3,23 @@ import { CreateAdmUserRepository } from "./repositories/create-adm-user/create-a
 import { CreateUserAdmController } from "./controller/create-adm-user/create-adm-user";
 import { GetAdmUsersController } from "./controller/get-adm-user/get-adm-user";
 import { GetAdmUsersRepository } from "./repositories/get-adm-user/get-adm-user";
+import { LoginUserRepository } from "./repositories/login/login";
+import { LoginUserController } from "./controller/login/login";
 
 const routes = Router();
 
 export default routes;
+
+routes.post("/login", async (req: Request, res: Response) => {
+  const loginUserRepository = new LoginUserRepository();
+  const loginUserController = new LoginUserController(loginUserRepository);
+
+  const { statusCode, body } = await loginUserController.handle({
+    body: req.body!,
+  });
+
+  res.status(statusCode).send(body);
+});
 
 routes.get("/administrators", async (req: Request, res: Response) => {
   const getAdmUserReporitory = new GetAdmUsersRepository();
