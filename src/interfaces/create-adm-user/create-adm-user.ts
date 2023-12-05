@@ -3,18 +3,22 @@ import { HttpRequest, HttpResponse } from "../http/http";
 import { IsearchExistingAdmUser } from "../search-existing-adm-user/search-existing-adm-user";
 
 export interface IcreateAdmUserParams {
-  params: Omit<Administrators, "id">;
+  user: string;
+  email: string;
+  password: string;
 }
 
 export interface IcreateAdmUserController {
   handle(
     httpRequest: HttpRequest<IcreateAdmUserParams>
-  ): Promise<HttpResponse<IcreateAdmUserParams>>;
+  ): Promise<HttpResponse<Omit<Administrators, "password">>>;
 }
 
 export interface IcreateAdmUserRepository {
-  createAdmUser(params: IcreateAdmUserParams): Promise<IcreateAdmUserParams>;
+  createAdmUser(
+    params: IcreateAdmUserParams
+  ): Promise<Omit<Administrators, "password">>;
   searchExistingAmdUser(
-    user: Omit<Administrators, "id" | "password">
+    params: Omit<Administrators, "id" | "password">
   ): Promise<IsearchExistingAdmUser>;
 }
