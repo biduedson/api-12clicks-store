@@ -18,7 +18,6 @@ export class LoginUserRepository implements iLoginUserRepository {
     });
     const validatePassword = new ValidatePassword(password, user?.password!);
     const passwordTrue = await validatePassword.validatePassword();
-    console.log(passwordTrue);
 
     if (!user) {
       return false;
