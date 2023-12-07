@@ -7,7 +7,7 @@ import { GenerateToken } from "../../services/generate-token/generate-token";
 import prisma from "../../services/prisma-client/prisma-client";
 import { ValidatePassword } from "../../services/validate-password/validate-password";
 
-export class LoginUserRepository implements iLoginUserRepository {
+class LoginUserRepository implements iLoginUserRepository {
   async checkEmailAndPassword(params: IloginUserParams): Promise<boolean> {
     const { email, password } = params;
 
@@ -53,3 +53,5 @@ export class LoginUserRepository implements iLoginUserRepository {
     };
   }
 }
+
+export const loginUserRepository = new LoginUserRepository();

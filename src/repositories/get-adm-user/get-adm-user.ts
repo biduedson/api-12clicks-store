@@ -1,7 +1,7 @@
 import { IgetUserRepository } from "../../interfaces/get-adm-user/get-adm-user";
 import prisma from "../../services/prisma-client/prisma-client";
 
-export class GetAdmUsersRepository implements IgetUserRepository {
+class GetAdmUsersRepository implements IgetUserRepository {
   async getUsers(): Promise<
     Omit<
       { id: number; user: string; email: string; password: string },
@@ -18,3 +18,5 @@ export class GetAdmUsersRepository implements IgetUserRepository {
     return admUsers;
   }
 }
+
+export const getAdmUserRepository = new GetAdmUsersRepository();

@@ -5,8 +5,9 @@ import {
 } from "../../interfaces/get-products/get-products";
 import { HttpResponse } from "../../interfaces/http/http";
 import { Product } from "@prisma/client";
+import { getProductRepository } from "../../repositories/get-products/get-products";
 
-export class GetProductController implements IgetProductController {
+class GetProductController implements IgetProductController {
   constructor(private readonly getProductRepository: IgetProductRepository) {}
   async handle(): Promise<
     HttpResponse<
@@ -37,3 +38,7 @@ export class GetProductController implements IgetProductController {
     }
   }
 }
+
+export const getProductcontroller = new GetProductController(
+  getProductRepository
+);

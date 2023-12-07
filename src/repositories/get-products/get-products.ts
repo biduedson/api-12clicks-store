@@ -2,7 +2,7 @@ import { Decimal } from "@prisma/client/runtime/library";
 import { IgetProductRepository } from "../../interfaces/get-products/get-products";
 import prisma from "../../services/prisma-client/prisma-client";
 
-export class GetProductRepository implements IgetProductRepository {
+class GetProductRepository implements IgetProductRepository {
   async getProduct(): Promise<
     {
       id: string;
@@ -20,3 +20,5 @@ export class GetProductRepository implements IgetProductRepository {
     return product;
   }
 }
+
+export const getProductRepository = new GetProductRepository();

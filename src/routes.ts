@@ -1,55 +1,38 @@
-import { Request, Response, Router } from "express";
-import { CreateAdmUserRepository } from "./repositories/create-adm-user/create-adm-user";
-import { CreateUserAdmController } from "./controller/create-adm-user/create-adm-user";
-import { GetAdmUsersController } from "./controller/get-adm-user/get-adm-user";
-import { GetAdmUsersRepository } from "./repositories/get-adm-user/get-adm-user";
-import { LoginUserRepository } from "./repositories/login/login";
-import { LoginUserController } from "./controller/login/login";
-import { GetProductRepository } from "./repositories/get-products/get-products";
-import { GetProductController } from "./controller/get-products/get-products";
+import { NextFunction, Request, Response, Router } from "express";
+import { createUserAdmController } from "./controller/create-adm-user/create-adm-user";
+import { getAdmUsersController } from "./controller/get-adm-user/get-adm-user";
+import { loginUserController } from "./controller/login/login";
+import { getProductcontroller } from "./controller/get-products/get-products";
+import { jwtValidator } from "./middleware/jwt-validation/jwt-validation";
 
 const routes = Router();
 
 export default routes;
 
 routes.post("/login", async (req: Request, res: Response) => {
-  const loginUserRepository = new LoginUserRepository();
-  const loginUserController = new LoginUserController(loginUserRepository);
-
   const { statusCode, body } = await loginUserController.handle({
     body: req.body!,
   });
-
   res.status(statusCode).send(body);
 });
 
+routes.use((req: Request, res: Response, next: NextFunction) => {
+  jwtValidator.validateToken(req, res, next);
+});
+
 routes.get("/administrators", async (req: Request, res: Response) => {
-  const getAdmUserReporitory = new GetAdmUsersRepository();
-  const getAdmUsersController = new GetAdmUsersController(getAdmUserReporitory);
-
   const { statusCode, body } = await getAdmUsersController.handle();
-
   res.status(statusCode).send(body);
 });
 
 routes.post("/administrators", async (req: Request, res: Response) => {
-  const createAdmUserRepository = new CreateAdmUserRepository();
-  const createUserAdmController = new CreateUserAdmController(
-    createAdmUserRepository
-  );
-
   const { body, statusCode } = await createUserAdmController.handle({
     body: req.body!,
   });
-
   res.status(statusCode).send(body);
 });
 
 routes.get("/product", async (req: Request, res: Response) => {
-  const getProductRepository = new GetProductRepository();
-  const getProductController = new GetProductController(getProductRepository);
-
-  const { statusCode, body } = await getProductController.handle();
-
+  const { statusCode, body } = await getProductcontroller.handle();
   res.status(statusCode).send(body);
 });

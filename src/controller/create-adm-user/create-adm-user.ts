@@ -5,8 +5,9 @@ import {
   IcreateAdmUserRepository,
 } from "../../interfaces/create-adm-user/create-adm-user";
 import { HttpRequest, HttpResponse } from "../../interfaces/http/http";
+import { createAdmUserRepository } from "../../repositories/create-adm-user/create-adm-user";
 
-export class CreateUserAdmController implements IcreateAdmUserController {
+class CreateUserAdmController implements IcreateAdmUserController {
   constructor(
     private readonly createAdmUserRepository: IcreateAdmUserRepository
   ) {}
@@ -44,3 +45,7 @@ export class CreateUserAdmController implements IcreateAdmUserController {
     }
   }
 }
+
+export const createUserAdmController = new CreateUserAdmController(
+  createAdmUserRepository
+);

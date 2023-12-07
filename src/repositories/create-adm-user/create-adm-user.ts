@@ -7,7 +7,7 @@ import {
 import { IsearchExistingAdmUser } from "../../interfaces/search-existing-adm-user/search-existing-adm-user";
 import { GeneratePasswordBcrypt } from "../../services/create-password-bycript/generate-password-bcrypt";
 
-export class CreateAdmUserRepository implements IcreateAdmUserRepository {
+class CreateAdmUserRepository implements IcreateAdmUserRepository {
   async searchExistingAmdUser(
     params: Omit<
       { id: number; user: string; email: string; password: string },
@@ -73,3 +73,5 @@ export class CreateAdmUserRepository implements IcreateAdmUserRepository {
     return newUser;
   }
 }
+
+export const createAdmUserRepository = new CreateAdmUserRepository();

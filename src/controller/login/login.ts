@@ -5,8 +5,9 @@ import {
   IloginUserParams,
   iLoginUserRepository,
 } from "../../interfaces/login/login";
+import { loginUserRepository } from "../../repositories/login/login";
 
-export class LoginUserController implements IloginUserController {
+class LoginUserController implements IloginUserController {
   constructor(private readonly loginUserRepository: iLoginUserRepository) {}
   async handle(
     httpRequest: HttpRequest<IloginUserParams>
@@ -43,3 +44,5 @@ export class LoginUserController implements IloginUserController {
     }
   }
 }
+
+export const loginUserController = new LoginUserController(loginUserRepository);

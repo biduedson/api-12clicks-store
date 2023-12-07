@@ -3,8 +3,9 @@ import {
   IgetUserRepository,
 } from "../../interfaces/get-adm-user/get-adm-user";
 import { HttpResponse } from "../../interfaces/http/http";
+import { getAdmUserRepository } from "../../repositories/get-adm-user/get-adm-user";
 
-export class GetAdmUsersController implements IgetUserController {
+class GetAdmUsersController implements IgetUserController {
   constructor(private readonly getUserRepository: IgetUserRepository) {}
   async handle(): Promise<
     HttpResponse<
@@ -28,3 +29,7 @@ export class GetAdmUsersController implements IgetUserController {
     }
   }
 }
+
+export const getAdmUsersController = new GetAdmUsersController(
+  getAdmUserRepository
+);
