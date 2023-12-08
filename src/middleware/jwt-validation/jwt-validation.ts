@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { ParamsDictionary } from "express-serve-static-core";
 import { ParsedQs } from "qs";
 import { IjwtValidation } from "../../interfaces/jwt-validation/jwt-validation";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload, TokenExpiredError } from "jsonwebtoken";
 import { FindAdmUserRepository } from "../../repositories/find-adm-user/find-adm-user";
 
 declare global {
@@ -43,6 +43,9 @@ class JwtValidator implements IjwtValidation {
       req.user = user;
       next();
     } catch (error) {
+      if (error instanceof TokenExpiredError) {
+        res.status(400).send("Token expirado efetue o login novamente.");
+      }
       res.status(500).send(`Erro interno do servidor. ${error}`);
     }
   }
