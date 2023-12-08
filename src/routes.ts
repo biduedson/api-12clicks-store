@@ -6,6 +6,7 @@ import { getProductcontroller } from "./controller/get-products/get-products";
 import { jwtValidator } from "./middleware/jwt-validation/jwt-validation";
 import { getOrderController } from "./controller/get-order/get-order";
 import { searchProductController } from "./controller/search-product/search-product";
+import { getCategoryController } from "./controller/get-category/get-category";
 
 const routes = Router();
 
@@ -48,5 +49,10 @@ routes.get("/product/:id", async (req: Request, res: Response) => {
 
 routes.get("/order", async (req: Request, res: Response) => {
   const { statusCode, body } = await getOrderController.handle();
+  res.status(statusCode).send(body);
+});
+
+routes.get("/category", async (req: Request, res: Response) => {
+  const { statusCode, body } = await getCategoryController.handle();
   res.status(statusCode).send(body);
 });
