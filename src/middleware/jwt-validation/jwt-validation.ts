@@ -44,7 +44,7 @@ class JwtValidator implements IjwtValidation {
       next();
     } catch (error) {
       if (error instanceof TokenExpiredError) {
-        res.status(400).send("Token expirado efetue o login novamente.");
+        return res.status(400).send("Token expirado efetue o login novamente.");
       }
       res.status(500).send(`Erro interno do servidor. ${error}`);
     }
