@@ -8,6 +8,7 @@ import { getOrderController } from "./controller/get-order/get-order";
 import { searchProductController } from "./controller/search-product/search-product";
 import { getCategoryController } from "./controller/get-category/get-category";
 import { getOrderProductController } from "./controller/get-order-product/get-order-product";
+import { deleteCategoryController } from "./controller/delete-category/delete-category";
 
 const routes = Router();
 
@@ -60,5 +61,12 @@ routes.get("/orderproduct", async (req: Request, res: Response) => {
 
 routes.get("/category", async (req: Request, res: Response) => {
   const { statusCode, body } = await getCategoryController.handle();
+  res.status(statusCode).send(body);
+});
+
+routes.delete("/category/:id", async (req: Request, res: Response) => {
+  const { statusCode, body } = await deleteCategoryController.handle({
+    params: req.params,
+  });
   res.status(statusCode).send(body);
 });
