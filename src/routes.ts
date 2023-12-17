@@ -9,6 +9,10 @@ import { searchProductController } from "./controller/search-product/search-prod
 import { getCategoryController } from "./controller/get-category/get-category";
 import { getOrderProductController } from "./controller/get-order-product/get-order-product";
 import { deleteCategoryController } from "./controller/delete-category/delete-category";
+import { createCategoryController } from "./controller/create-category/create-category";
+import { updateCategoryController } from "./controller/update-category/update-category";
+import { createProductController } from "./controller/create-product/create-product";
+import { updateProductController } from "./controller/update-product/update-product";
 
 const routes = Router();
 
@@ -16,7 +20,7 @@ export default routes;
 
 routes.post("/login", async (req: Request, res: Response) => {
   const { statusCode, body } = await loginUserController.handle({
-    body: req.body!,
+    body: req.body!
   });
   res.status(statusCode).send(body);
 });
@@ -32,7 +36,7 @@ routes.get("/administrators", async (req: Request, res: Response) => {
 
 routes.post("/administrators", async (req: Request, res: Response) => {
   const { body, statusCode } = await createUserAdmController.handle({
-    body: req.body!,
+    body: req.body!
   });
   res.status(statusCode).send(body);
 });
@@ -44,11 +48,26 @@ routes.get("/product", async (req: Request, res: Response) => {
 
 routes.get("/product/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await searchProductController.handle({
-    params: req.params,
+    params: req.params
   });
   res.status(statusCode).send(body);
 });
 
+routes.post("/product", async (req: Request, res: Response) => {
+  const { statusCode, body } = await createProductController.handle({
+    body: req.body
+  });
+
+  res.status(statusCode).send(body);
+});
+
+routes.patch("/product", async (req: Request, res: Response) => {
+  const { statusCode, body } = await updateProductController.handle({
+    body: req.body
+  });
+
+  res.status(statusCode).send(body);
+});
 routes.get("/order", async (req: Request, res: Response) => {
   const { statusCode, body } = await getOrderController.handle();
   res.status(statusCode).send(body);
@@ -59,14 +78,28 @@ routes.get("/orderproduct", async (req: Request, res: Response) => {
   res.status(statusCode).send(body);
 });
 
+routes.post("/category", async (req: Request, res: Response) => {
+  const { statusCode, body } = await createCategoryController.handle({
+    body: req.body
+  });
+  res.status(statusCode).send(body);
+});
+
 routes.get("/category", async (req: Request, res: Response) => {
   const { statusCode, body } = await getCategoryController.handle();
   res.status(statusCode).send(body);
 });
 
+routes.patch("/category", async (req: Request, res: Response) => {
+  const { statusCode, body } = await updateCategoryController.handle({
+    body: req.body
+  });
+
+  res.status(statusCode).send(body);
+});
 routes.delete("/category/:id", async (req: Request, res: Response) => {
   const { statusCode, body } = await deleteCategoryController.handle({
-    params: req.params,
+    params: req.params
   });
   res.status(statusCode).send(body);
 });
